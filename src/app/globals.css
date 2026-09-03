@@ -1,0 +1,412 @@
+@import 'tailwindcss';
+
+/*
+  CHAWLA STUDIO — design tokens
+  ---------------------------------------------------------------------------
+  The palette is a darkroom: a gelatin-silver print on warm paper, viewed in
+  near-dark, with the muted plum cast that selenium toning leaves in the
+  shadows. That plum is the only accent, and it is used at hairline scale so
+  the photography stays the loudest thing on the page.
+*/
+@theme {
+  /* Surfaces — never pure black; a photographic shadow keeps a little blue. */
+  --color-ink: #08080a;
+  --color-ink-raise: #0e0e13;
+  --color-ink-high: #16161d;
+
+  /* Type — warm white, the base tone of fibre print paper. */
+  --color-paper: #ede9e4;
+  --color-paper-dim: #b4afab;
+  --color-muted: #837d86;
+
+  /* Accent — selenium-toned silver. Restrained by design. */
+  --color-selenium: #a87e92;
+  --color-selenium-deep: #5e3e4c;
+
+  /* Warm gold — the hero's accent, and the only gilding on the site.
+     Used at hairline weight (rules, borders, small caps, the script) and once
+     as a filled button, so it reads as a gilded frame rather than as chrome. */
+  --color-gold: #c9a36a;
+  --color-gold-bright: #e7c692;
+  --color-gold-deep: #7d5f36;
+  --color-gold-line: rgba(201, 163, 106, 0.34);
+  --color-gold-line-strong: rgba(201, 163, 106, 0.62);
+
+  /* Ivory — warmer and brighter than `paper`, for type set over a photograph. */
+  --color-ivory: #f5efe5;
+
+  /* Borders live at very low opacity so they read as edges, not boxes. */
+  --color-hairline: rgba(237, 233, 228, 0.1);
+  --color-hairline-strong: rgba(237, 233, 228, 0.22);
+
+  /* Typefaces: a Didone display against a grotesque, with a technical mono
+     for capture data, and a calligraphic script for the hero's accent line.
+     Wired up by next/font in app/layout.tsx. */
+  --font-display: var(--font-playfair), 'Didot', 'Times New Roman', serif;
+  --font-body: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, 'SFMono-Regular', monospace;
+  --font-script: var(--font-allura), 'Apple Chancery', 'Segoe Script', cursive;
+
+  /* Dramatic display scale — fluid, so headlines stay intentional at any width. */
+  --text-display-xl: clamp(3.25rem, 12.5vw, 12.5rem);
+  --text-display-l: clamp(2.5rem, 7.5vw, 6.5rem);
+  --text-display-m: clamp(1.875rem, 4.75vw, 3.75rem);
+  --text-display-s: clamp(1.5rem, 3vw, 2.25rem);
+
+  /* The hero pair. Two regimes, because the hero has two compositions: below
+     `lg` the type sits under the photograph, so it can run large for the screen;
+     from `lg` up it is set beside the couple, and the only ramp that keeps the
+     headline in the same relationship to the frame at every width is a pure `vw`
+     one (a fixed rem term makes the line relatively wider on smaller screens,
+     which is what pushes type into a face). The `lg` values live in a media
+     query further down; these are the stacked ones. The script's terms are the
+     caps' terms times 1.42, because a calligraphic face carries a tiny x-height
+     for its point size. */
+  --text-hero: clamp(2.1rem, 6.9vw, 3.4rem);
+  --text-script: clamp(2.98rem, 9.8vw, 4.83rem);
+
+  /* Marginalia: tiny, tracked out, uppercase. */
+  --text-data: 0.625rem;
+  --text-data--line-height: 1.15;
+  --text-data--letter-spacing: 0.24em;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.3;
+  --text-label--letter-spacing: 0.16em;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --spacing-gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --spacing-rebate: clamp(0px, 3.2vw, 3.25rem);
+}
+
+@layer base {
+  /*
+    Film grain, generated rather than downloaded: one tile of fractal noise as
+    an inline SVG, so the texture costs no request and never pixelates. Used by
+    the .grain overlay below.
+  */
+  :root {
+    --grain-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  /*
+    From `lg` up the hero switches composition: the headline is set beside the
+    couple rather than under the photograph, so its width now has to be held in
+    a fixed relationship to the frame — the line has to finish before the
+    bride's face at every width, and a `clamp()` with a rem term does not do
+    that (its relative width grows as the screen narrows). A pure `vw` ramp
+    does, so the overlay regime gets its own one.
+  */
+  @media (min-width: 64rem) {
+    :root {
+      --text-hero: clamp(3rem, 4.75vw, 4.4rem);
+      --text-script: clamp(4.26rem, 6.75vw, 6.25rem);
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    background-color: var(--color-ink);
+    /* Section anchors clear the fixed header. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Guards against any child that over-runs the viewport. */
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-selenium-deep);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-selenium);
+    outline-offset: 3px;
+    border-radius: 1px;
+    /* A dark companion band, drawn from the element's edge to just past the
+       outline. On the page's near-black it is invisible and the ring reads as
+       drawn; over a photograph — the hero's two actions, every frame button in
+       a series — it is what keeps a 2px mauve ring from dissolving into a
+       bright highlight. */
+    box-shadow: 0 0 0 6px rgb(8 8 10 / 0.78);
+  }
+
+  /* Only suppress the ring for pointer interaction, never for keyboards. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  img,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* Page shell: gutters plus the narrow left strip that carries capture data,
+     the way edge printing runs down the rebate of a film frame. */
+  .shell {
+    width: 100%;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  /*
+    One column until there is a rebate mark to put in the second one.
+
+    `display: none` takes the mark out of grid flow altogether, so a two-column
+    template below the breakpoint would auto-place the section's only remaining
+    child — the .shell — into the narrow rebate track and squeeze the whole
+    section into a few pixels. The track and the mark appear together.
+  */
+  .rebate-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Vertical, tracked-out marginalia. Hidden where there is no room for it. */
+  .rebate-mark {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  @media (min-width: 48rem) {
+    .rebate-grid {
+      grid-template-columns: var(--spacing-rebate) minmax(0, 1fr);
+    }
+
+    .rebate-mark {
+      display: block;
+    }
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-data);
+    letter-spacing: var(--text-data--letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .rule {
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-hairline);
+    border: 0;
+  }
+
+  /* The gold hairline that runs out of an eyebrow and fades, as in the hero. */
+  .gold-rule {
+    height: 1px;
+    border: 0;
+    background-image: linear-gradient(
+      to right,
+      var(--color-gold-line-strong),
+      transparent
+    );
+  }
+
+  /* A gilded panel laid over a photograph: translucent ink, a hairline gold
+     edge, and just enough blur that small type stays legible over whatever the
+     frame happens to be doing underneath it. */
+  .gilt-panel {
+    border: 1px solid var(--color-gold-line);
+    background-color: rgba(8, 8, 10, 0.58);
+    -webkit-backdrop-filter: blur(7px) saturate(115%);
+    backdrop-filter: blur(7px) saturate(115%);
+  }
+
+  /* Film grain. One fixed SVG-noise layer over the whole document, screened
+     back to almost nothing — it unifies the photography and kills banding in
+     the large dark gradients. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: var(--grain-image);
+    background-size: 180px 180px;
+  }
+
+  /* Underline that draws in from the leading edge on hover/focus. */
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.25em;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after,
+  .link-underline[data-active='true']::after {
+    transform: scaleX(1);
+  }
+
+  /* Masked image reveal, driven by a data attribute so it works with the
+     IntersectionObserver in <Reveal>. */
+  .clip-reveal {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.1s var(--ease-out-expo);
+  }
+
+  .clip-reveal[data-shown='true'] {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Small type set directly over the loading screen's photograph. The scrims
+     under it do most of the work; this closes the gap where the frame happens to
+     be bright — a candle flame or a string light landing behind a 10px line of
+     tracked caps. A shadow rather than a heavier scrim, because the brief is to
+     keep the photograph's own light. */
+  .loader-legible {
+    text-shadow: 0 1px 14px rgba(8, 8, 10, 0.9);
+  }
+
+  /* One speck of light on the loading screen, drifting up and fading at both
+     ends of its travel. Position, size, delay and duration all come from the
+     element (see loader/LoaderMotes.tsx), so eight of these share one class and
+     one keyframe rather than eight of each. Compositor-only properties, because
+     this is the one thing still animating while the page is decoding. */
+  .loader-mote {
+    animation-name: loader-mote;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+}
+
+@keyframes loader-mote {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+
+  22%,
+  74% {
+    opacity: 0.55;
+  }
+
+  to {
+    transform: translate3d(0, -3.5rem, 0);
+    opacity: 0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Fine, tracked-out uppercase used for buttons and nav. */
+  .tracked {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tracked-wide {
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Horizontal galleries snap, but only on pointer-coarse devices where the
+     gesture is a swipe. */
+  .snap-rail {
+    scroll-snap-type: x mandatory;
+  }
+
+  .snap-rail > * {
+    scroll-snap-align: start;
+  }
+}
+
+/* The site is legible and navigable with motion switched off: transitions are
+   collapsed rather than removed, and the 3D hero swaps to a still frame (see
+   useReducedMotion in lib/hooks/useMediaQuery.ts). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .clip-reveal {
+    clip-path: none !important;
+  }
+}

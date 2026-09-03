@@ -1,0 +1,50 @@
+{
+  "name": "chawla-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chawla Studio — premium photography & cinematography portfolio.",
+  "scripts": {
+    "predev": "node scripts/ensure-assets.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/ensure-assets.mjs",
+    "build": "next build",
+    "start": "next start",
+    "preexport": "node scripts/ensure-assets.mjs",
+    "export": "node scripts/export-static.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "photos": "node scripts/optimize-photos.mjs",
+    "photos:force": "node scripts/optimize-photos.mjs --force",
+    "loading-image": "node scripts/optimize-loading-image.mjs",
+    "loading-image:force": "node scripts/optimize-loading-image.mjs --force",
+    "contact-sheet": "node scripts/contact-sheet.mjs",
+    "verify": "npm run typecheck && npm run lint && npm run build"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.7.8",
+    "@react-three/fiber": "9.7.0",
+    "lenis": "1.3.26",
+    "next": "16.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-hook-form": "7.86.0",
+    "three": "0.185.1",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.4.0",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "@types/three": "0.185.4",
+    "eslint": "10.9.1",
+    "eslint-config-next": "16.3.3",
+    "exif-reader": "^2.0.2",
+    "sharp": "^0.35.4",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

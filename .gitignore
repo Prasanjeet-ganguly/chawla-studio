@@ -1,0 +1,46 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# generated photography pipeline output
+/public/photos/
+/src/lib/photos.generated.ts
+/.photo-cache.json
+/.contact-sheets/
+
+# generated loading-screen background (source lives in /Loading Screen)
+/public/images/loading/
+/src/lib/loader-image.generated.ts
+/.loader-image-cache.json
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# editors
+.vscode/*
+!.vscode/extensions.json
+.idea
