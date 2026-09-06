@@ -28,7 +28,7 @@ type HeroBackdropProps = {
  */
 export function HeroBackdrop({ photoId, layer }: HeroBackdropProps) {
   return (
-    <div className="absolute inset-x-0 top-0 -z-10 h-[56svh] overflow-hidden md:h-[46svh] lg:h-full">
+    <div className="absolute inset-x-0 top-0 -z-10 h-[52svh] overflow-hidden sm:h-[48svh] md:h-[46svh] lg:h-full">
       <div
         ref={layer}
         // The zoom and the crop's anchor are breakpoint business, so they live
@@ -40,7 +40,7 @@ export function HeroBackdrop({ photoId, layer }: HeroBackdropProps) {
         // vertically and the focus' X term is inert there; the full-height
         // laptop frame can go either way, so X is set for the narrowest laptop
         // box (a 4:3 landscape tablet) and simply has no effect on wide ones.
-        className="absolute inset-0 origin-[30%_30%] [--hero-focus:50%_30%] [--hero-zoom:1.12] will-change-transform md:origin-[40%_30%] md:[--hero-focus:50%_26%] md:[--hero-zoom:1.06] lg:origin-[9%_12%] lg:[--hero-focus:20%_26%] lg:[--hero-zoom:1.36]"
+        className="absolute inset-0 origin-[30%_30%] [--hero-focus:50%_28%] [--hero-zoom:1.12] will-change-transform md:origin-[40%_30%] md:[--hero-focus:50%_26%] md:[--hero-zoom:1.06] lg:origin-[9%_12%] lg:[--hero-focus:20%_26%] lg:[--hero-zoom:1.36]"
         style={{ transform: 'translate3d(0, 0, 0) scale(var(--hero-zoom))' }}
       >
         <Photo
@@ -53,16 +53,11 @@ export function HeroBackdrop({ photoId, layer }: HeroBackdropProps) {
         />
       </div>
 
-      {/* Phone and portrait tablet: the photograph reads top-down and dissolves
-          into ink, so the type below it sits on ink rather than on a picture.
-          The top stop is light because the scrim further down adds the rest of
-          the masthead's cover — together they must not veil the couple. The ramp
-          reaches full ink at 88% rather than at the band's edge: a bokeh
-          highlight under 90% ink is still brighter than ink, so a gradient that
-          only arrives at the last pixel leaves a visible horizontal cut. */}
+      {/* Phone and portrait tablet: smooth cinematic dissolve into ink background.
+          Multi-stop gradient with eased opacity stops avoids any hard lines or harsh edges. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,10,0.34)_0%,rgba(8,8,10,0.16)_24%,rgba(8,8,10,0.44)_50%,rgba(8,8,10,0.78)_72%,var(--color-ink)_88%)] lg:hidden"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,10,0.36)_0%,rgba(8,8,10,0.12)_18%,rgba(8,8,10,0.32)_42%,rgba(8,8,10,0.68)_65%,rgba(8,8,10,0.92)_84%,var(--color-ink)_98%)] lg:hidden"
       />
 
       {/* Laptop and up: the cinematic left-dark wash of the reference. The stops

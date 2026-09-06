@@ -72,7 +72,7 @@ export function Hero() {
           masthead instead. */}
       <div
         ref={content}
-        className="shell relative flex flex-1 flex-col justify-end pt-[46svh] will-change-transform md:pt-[38svh] lg:justify-center lg:pt-24"
+        className="shell relative flex flex-1 flex-col justify-end pt-[34svh] will-change-transform sm:pt-[38svh] md:pt-[38svh] lg:justify-center lg:pt-24"
       >
         <HeroContent shown={shown} />
         <HeroActions shown={shown} onShowreel={openShowreel} />
@@ -81,20 +81,19 @@ export function Hero() {
       {/*
         The marginalia band, as one grid rather than nested flex rows, because it
         has three arrangements and they are placements rather than orders: the
-        figures, the crest and the closing line stack on a phone; on a portrait
-        tablet the crest moves up beside the figures and the closing line takes
-        the full measure under them (it needs 377px of its own, and the tablet
-        cannot spare that beside a 421px panel); from `lg` the crest and the line
-        share the right-hand column with the figures held against them.
+        figures, the crest and the closing line stack gracefully on a phone; on
+        a tablet the crest moves beside the figures and the closing line takes
+        the full measure; from `lg` the crest and the line share the right-hand
+        column with the figures held against them.
       */}
-      <div className="shell relative mt-12 grid grid-cols-1 items-end gap-x-10 gap-y-8 pb-10 md:mt-10 md:grid-cols-[1fr_auto] md:pb-9">
-        <div className="lg:row-span-2 lg:self-end">
+      <div className="shell relative mt-8 grid grid-cols-1 items-end gap-6 sm:mt-10 sm:grid-cols-2 md:mt-10 md:grid-cols-[1fr_auto] md:gap-x-10 md:gap-y-8 pb-8 md:pb-9">
+        <div className="sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:self-end">
           <HeroStats shown={shown} />
         </div>
-        <div className="justify-self-end">
+        <div className="justify-self-center sm:justify-self-start md:justify-self-end">
           <WeddingBadge shown={shown} />
         </div>
-        <div className="justify-self-end md:col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-2">
+        <div className="justify-self-center sm:justify-self-end md:col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-2">
           <BrandStatement shown={shown} />
         </div>
       </div>

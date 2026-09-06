@@ -83,7 +83,7 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
       data-lenis-prevent
       className="fixed inset-0 z-[70] flex flex-col bg-ink lg:hidden"
     >
-      <div className="flex items-center justify-between border-b border-hairline px-gutter py-5">
+      <div className="flex items-center justify-between border-b border-hairline px-gutter py-5 pt-[calc(1.25rem+env(safe-area-inset-top,0px))]">
         <Wordmark onClick={onClose} />
         <button
           type="button"
@@ -92,14 +92,14 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
           // is under the 44px a thumb needs. The minimum height states that
           // intent directly rather than leaving it to padding arithmetic that
           // any change of type size would quietly undo.
-          className="-mr-2 inline-flex min-h-11 items-center px-2 text-label tracked text-paper-dim transition-colors hover:text-gold"
+          className="-mr-2 inline-flex min-h-11 items-center px-2 text-label tracked text-paper-dim transition-colors hover:text-gold active:text-gold"
         >
           Close
         </button>
       </div>
 
-      <nav aria-label="Primary" className="flex-1 overflow-y-auto px-gutter py-8">
-        <ul className="flex flex-col gap-2">
+      <nav aria-label="Primary" className="flex-1 overflow-y-auto px-gutter py-6">
+        <ul className="flex flex-col gap-1">
           {navLinks.map((link, index) => {
             const isActive = link.section !== null && active === link.section;
             return (
@@ -108,14 +108,14 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
                   href={link.href}
                   onClick={onClose}
                   aria-current={isActive ? 'true' : undefined}
-                  className="flex items-baseline gap-4 py-5"
+                  className="flex items-baseline gap-4 py-4 sm:py-5"
                 >
                   <span className="eyebrow text-gold/70">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <span
                     className={cx(
-                      'font-display text-display-s',
+                      'font-display text-display-s transition-colors',
                       isActive ? 'text-gold' : 'text-ivory'
                     )}
                   >
@@ -126,9 +126,34 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
             );
           })}
         </ul>
+
+        {/* Studio quick contact channels on mobile */}
+        <div className="mt-8 border-t border-hairline pt-6">
+          <p className="eyebrow text-gold">Direct channels</p>
+          <div className="mt-4 flex flex-col gap-3">
+            {siteConfig.contact.phone ? (
+              <a
+                href={`tel:${siteConfig.contact.phone.replace(/[^+\d]/g, '')}`}
+                className="inline-flex min-h-11 items-center gap-3 text-sm text-paper-dim transition-colors hover:text-paper"
+              >
+                <span className="eyebrow text-gold">Phone</span>
+                <span>{siteConfig.contact.phone}</span>
+              </a>
+            ) : null}
+            {siteConfig.contact.email ? (
+              <a
+                href={`mailto:${siteConfig.contact.email}`}
+                className="inline-flex min-h-11 items-center gap-3 text-sm text-paper-dim transition-colors hover:text-paper"
+              >
+                <span className="eyebrow text-gold">Email</span>
+                <span className="truncate">{siteConfig.contact.email}</span>
+              </a>
+            ) : null}
+          </div>
+        </div>
       </nav>
 
-      <div className="px-gutter pb-9">
+      <div className="border-t border-hairline px-gutter py-6 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
         <Button href="/#contact" variant="gilt" size="compact" onClick={onClose}>
           <span className="inline-flex items-center gap-2.5">
             <span className="h-[0.95rem] w-[0.95rem] shrink-0 text-gold">
@@ -137,7 +162,7 @@ export function MobileMenu({ open, onClose, active }: MobileMenuProps) {
             Book a shoot
           </span>
         </Button>
-        <p className="eyebrow mt-6">{siteConfig.tagline}</p>
+        <p className="eyebrow mt-4 text-[0.62rem] text-paper-dim/75">{siteConfig.tagline}</p>
       </div>
     </div>
   );

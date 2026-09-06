@@ -88,7 +88,7 @@ export function PhilosophySection() {
       ref={section}
       id="philosophy"
       aria-labelledby="philosophy-title"
-      className="rebate-grid py-24 md:py-36"
+      className="rebate-grid py-20 sm:py-24 md:py-36"
     >
       <p className="rebate-mark self-start pt-2">
         {projects.length} series · {allProjectPhotoIds.length} frames
@@ -96,45 +96,45 @@ export function PhilosophySection() {
 
       <div className="shell">
         <Reveal>
-          <p className="eyebrow">What we photograph</p>
+          <p className="eyebrow text-gold">What we photograph</p>
           <h2 id="philosophy-title" className="sr-only">
             Our approach
           </h2>
         </Reveal>
 
-        <dl className="mt-12 flex flex-col gap-10 md:gap-14">
+        <dl className="mt-8 flex flex-col gap-8 sm:mt-12 sm:gap-10 md:gap-14">
           {TENETS.map((tenet, index) => (
             <Reveal
               key={tenet.word}
               delay={index * 0.06}
-              className="grid items-baseline gap-3 md:grid-cols-[minmax(0,1fr)_20rem] md:gap-12"
+              className="grid items-baseline gap-2 border-b border-hairline/40 pb-6 sm:border-0 sm:pb-0 md:grid-cols-[minmax(0,1fr)_20rem] md:gap-12"
             >
               <dt>
                 <span
                   ref={(node) => {
                     words.current[index] = node;
                   }}
-                  className="block font-display uppercase leading-[0.9] text-display-l"
+                  className="block font-display uppercase leading-[0.9] text-display-m sm:text-display-l text-ivory"
                 >
                   {tenet.word}
                 </span>
               </dt>
-              <dd className="max-w-sm text-sm text-paper-dim md:pb-3">{tenet.line}</dd>
+              <dd className="max-w-sm text-sm leading-relaxed text-paper-dim md:pb-3">{tenet.line}</dd>
             </Reveal>
           ))}
         </dl>
       </div>
 
       {/* The contact strip: every series, edge to edge, dragged by hand. */}
-      <div className="col-span-full mt-20 md:mt-28">
+      <div className="col-span-full mt-16 sm:mt-20 md:mt-28">
         <ul
           data-lenis-prevent
           className="no-scrollbar snap-rail flex list-none gap-4 overflow-x-auto px-gutter pb-4"
         >
           {STRIP.map((id, index) => (
-            <li key={id} className="w-[70vw] shrink-0 sm:w-[38vw] lg:w-[23vw]">
-              <Photo id={id} alt={describe(id)} sizes="(min-width: 1024px) 23vw, 70vw" />
-              <p className="mt-3 eyebrow">{frameNumber(index)}</p>
+            <li key={id} className="w-[74vw] shrink-0 sm:w-[38vw] lg:w-[23vw]">
+              <Photo id={id} alt={describe(id)} sizes="(min-width: 1024px) 23vw, 74vw" />
+              <p className="mt-3 eyebrow text-paper-dim">{frameNumber(index)}</p>
             </li>
           ))}
         </ul>

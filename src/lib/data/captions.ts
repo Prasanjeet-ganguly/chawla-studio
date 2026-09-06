@@ -174,6 +174,14 @@ export const CAPTIONS: Record<string, Caption> = {
   '0f5a6404': {
     alt: 'A woman in peach holds the baby in white tulle in front of the lit party backdrop.',
   },
+
+  // ── Official films ────────────────────────────────────────────────────────
+  'highlight-1': {
+    alt: 'A still from the highlights reel, the couple mid-dance under warm stage light.',
+  },
+  'highlight-2': {
+    alt: 'A still from the wedding highlights film, the couple walking together amid celebration.',
+  },
 };
 
 /**

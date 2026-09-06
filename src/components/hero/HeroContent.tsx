@@ -24,7 +24,7 @@ export function HeroContent({ shown }: { shown: boolean }) {
         <span aria-hidden="true" className="gold-rule w-14 shrink-0 md:w-20" />
       </div>
 
-      <h1 id="hero-title" className="mt-6 font-display text-ivory md:mt-7">
+      <h1 id="hero-title" className="mt-5 font-display text-ivory md:mt-7">
         {headingLines.map((line, index) => (
           <span
             key={line}
@@ -57,7 +57,7 @@ export function HeroContent({ shown }: { shown: boolean }) {
 
       <p
         className={cx(
-          'mt-7 max-w-lg text-base leading-relaxed text-ivory/85 md:mt-8 md:text-[1.05rem]',
+          'mt-6 max-w-lg text-base leading-relaxed text-ivory/85 sm:mt-7 md:mt-8 md:text-[1.05rem]',
           RISE,
           risen(shown)
         )}

@@ -16,6 +16,9 @@ const staticExport = process.env.STATIC_EXPORT === '1';
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
+  // Hide the development indicator badge ("N" icon) on screen
+  devIndicators: false,
+
   // Photographs are pre-optimised at build time by scripts/optimize-photos.mjs
   // into responsive AVIF/WebP variants under /public/photos, so the runtime
   // image optimiser is not needed. See src/components/ui/Photo.tsx.

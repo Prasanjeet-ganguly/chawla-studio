@@ -278,6 +278,34 @@ const RAW_VIDEO_SERIES = [
     photoIds: ['trailer-1', '0f5a9991', '0f5a9678', '0f5a9959', '0f5a9962'],
     categoryName: 'Trailer',
   },
+  {
+    type: 'video' as const,
+    slug: 'cinematic-wedding-highlights',
+    title: 'Highlights 1',
+    category: 'Highlights' as const,
+    description:
+      'A curated highlight reel capturing the emotion, grandeur, and unforgettable celebrations.',
+    coverId: 'highlight-1',
+    videoUrl: 'https://youtu.be/Cb2fObhWWyQ',
+    aspectRatio: 16 / 9,
+    duration: '3:45',
+    photoIds: ['highlight-1', '0f5a9991', '0f5a9678', '0f5a9959', '0f5a9962'],
+    categoryName: 'Highlights',
+  },
+  {
+    type: 'video' as const,
+    slug: 'cinematic-wedding-highlights-2',
+    title: 'Highlights 2',
+    category: 'Highlights' as const,
+    description:
+      'A vivid wedding highlights film weaving together sacred ceremonies, celebration, and heartfelt memories.',
+    coverId: 'highlight-2',
+    videoUrl: 'https://youtu.be/XCMc5XBaqFA',
+    aspectRatio: 16 / 9,
+    duration: '4:12',
+    photoIds: ['highlight-2', '0f5a9991', '0f5a9678', '0f5a9959', '0f5a9962'],
+    categoryName: 'Highlights',
+  },
 ];
 
 const VIDEO_SERIES: readonly VideoProject[] = RAW_VIDEO_SERIES.map((p) => ({

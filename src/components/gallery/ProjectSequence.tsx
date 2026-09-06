@@ -52,7 +52,7 @@ export function ProjectSequence({ ids, title }: ProjectSequenceProps) {
 
   return (
     <>
-      <ul className="mt-16 grid list-none grid-cols-1 gap-x-8 gap-y-16 p-0 md:mt-24 md:grid-cols-12">
+      <ul className="mt-16 grid list-none grid-cols-1 gap-x-8 gap-y-14 p-0 md:mt-24 md:grid-cols-12 md:gap-y-20">
         {ids.map((id, index) => {
           const note = noteFor(id);
           const slot = RHYTHM[index % RHYTHM.length]!;
@@ -71,22 +71,24 @@ export function ProjectSequence({ ids, title }: ProjectSequenceProps) {
                 aria-label={`Open frame ${frameNumber(index)} full screen: ${describe(id)}`}
                 className="group block w-full text-left"
               >
+                <span className="mb-2.5 flex items-baseline justify-between gap-4 sm:mb-3">
+                  <span className="eyebrow text-gold/80 transition-colors duration-300 group-hover:text-gold">
+                    {frameNumber(index)}
+                  </span>
+                  <span className="eyebrow text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
+                    View &#8594;
+                  </span>
+                </span>
+
                 <Photo
                   id={id}
                   alt={describe(id)}
                   sizes={SIZES[index % SIZES.length]!}
                   zoom
                 />
-
-                <span className="mt-4 flex items-baseline justify-between gap-4">
-                  <span className="eyebrow">{frameNumber(index)}</span>
-                  <span className="eyebrow opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
-                    View
-                  </span>
-                </span>
               </button>
 
-              {note ? <p className="mt-3 max-w-sm text-sm text-paper-dim">{note}</p> : null}
+              {note ? <p className="mt-3 max-w-sm text-sm text-paper-dim sm:mt-3.5">{note}</p> : null}
             </Reveal>
           );
         })}

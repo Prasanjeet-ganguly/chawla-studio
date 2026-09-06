@@ -103,6 +103,13 @@ export function WorkSection() {
         : 'border-hairline text-paper-dim hover:border-gold-line hover:text-paper'
     );
 
+  /** Tier-one tab (Photography / Videos) — bigger touch target with the gold rule. */
+  const groupTab = (active: boolean) =>
+    cx(
+      'relative -mb-px inline-flex min-h-12 items-center px-1 pb-3 font-display text-lg tracking-[0.14em] uppercase transition-colors duration-500 md:text-xl',
+      active ? 'text-ivory' : 'text-paper-dim hover:text-paper'
+    );
+
   return (
     <section id="work" aria-labelledby="work-title" className="rebate-grid py-24 md:py-36">
       <p className="rebate-mark self-start pt-2">Selected work</p>
@@ -123,7 +130,7 @@ export function WorkSection() {
           <div
             role="group"
             aria-label="Portfolio group"
-            className="flex gap-8 border-b border-hairline md:gap-10"
+            className="no-scrollbar -mx-gutter flex snap-x snap-mandatory gap-6 overflow-x-auto border-b border-hairline px-gutter md:mx-0 md:flex-wrap md:gap-10 md:px-0"
           >
             {GROUPS.map((entry) => {
               const active = group === entry.id;
@@ -138,8 +145,8 @@ export function WorkSection() {
                     setLightboxIndex(null);
                   }}
                   className={cx(
-                    'relative -mb-px inline-flex min-h-11 items-center pb-3 font-display text-lg tracking-[0.14em] uppercase transition-colors duration-500 md:text-xl',
-                    active ? 'text-ivory' : 'text-paper-dim hover:text-paper'
+                    'snap-start',
+                    groupTab(active)
                   )}
                 >
                   {entry.label}
@@ -215,7 +222,7 @@ export function WorkSection() {
           </Reveal>
         ) : group === 'photography' ? (
           /* Photography Direct Photo Gallery Grid */
-          <ul className="mt-12 grid list-none grid-cols-1 gap-x-8 gap-y-16 p-0 md:grid-cols-12">
+          <ul className="mt-10 grid list-none grid-cols-1 gap-x-8 gap-y-14 p-0 sm:mt-12 sm:gap-y-16 md:grid-cols-12 md:gap-y-20">
             {photoIds.map((id, index) => {
               const note = noteFor(id);
               const slot = PHOTO_RHYTHM[index % PHOTO_RHYTHM.length]!;
@@ -234,6 +241,15 @@ export function WorkSection() {
                     aria-label={`Open frame ${frameNumber(index)} full screen: ${describe(id)}`}
                     className="group block w-full text-left"
                   >
+                    <span className="mb-2.5 flex items-baseline justify-between gap-4 sm:mb-3">
+                      <span className="eyebrow text-gold/80 transition-colors duration-300 group-hover:text-gold">
+                        {frameNumber(index)}
+                      </span>
+                      <span className="eyebrow text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
+                        View Frame &#8594;
+                      </span>
+                    </span>
+
                     <div className="overflow-hidden">
                       <Photo
                         id={id}
@@ -242,19 +258,10 @@ export function WorkSection() {
                         zoom
                       />
                     </div>
-
-                    <span className="mt-4 flex items-baseline justify-between gap-4">
-                      <span className="eyebrow text-paper-dim group-hover:text-gold transition-colors duration-300">
-                        {frameNumber(index)}
-                      </span>
-                      <span className="eyebrow text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100">
-                        View Frame &#8594;
-                      </span>
-                    </span>
                   </button>
 
                   {note ? (
-                    <p className="mt-3 max-w-sm text-sm text-paper-dim">{note}</p>
+                    <p className="mt-3 max-w-sm text-sm text-paper-dim sm:mt-3.5">{note}</p>
                   ) : null}
                 </Reveal>
               );

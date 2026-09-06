@@ -26,13 +26,15 @@ export function HeroStats({ shown }: { shown: boolean }) {
         {figures.stats.map((stat) => (
           <div
             key={stat.label}
-            className="flex flex-col items-center gap-2 px-3 py-5 text-center md:px-5"
+            className="flex flex-col items-center justify-center gap-1.5 px-2 py-4 text-center sm:gap-2 sm:px-4 sm:py-5 md:px-5"
           >
-            <span className="order-1 h-5 w-5 text-gold md:h-[1.35rem] md:w-[1.35rem]">
+            <span className="order-1 h-4 w-4 text-gold sm:h-5 sm:w-5 md:h-[1.35rem] md:w-[1.35rem]">
               <StatGlyph icon={stat.icon} />
             </span>
-            <dt className="eyebrow order-3 text-paper-dim">{stat.label}</dt>
-            <dd className="order-2 font-display text-[1.55rem] leading-none text-ivory md:text-[1.9rem]">
+            <dt className="eyebrow order-3 text-[0.58rem] leading-tight tracking-[0.08em] text-paper-dim sm:text-[0.65rem] sm:tracking-[0.14em]">
+              {stat.label}
+            </dt>
+            <dd className="order-2 font-display text-[1.35rem] leading-none text-ivory sm:text-[1.65rem] md:text-[1.9rem]">
               {stat.value}
             </dd>
           </div>

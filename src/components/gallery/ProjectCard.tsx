@@ -82,6 +82,16 @@ export function ProjectCard({
             </span>
           </span>
         ) : null}
+
+        {/* Duration pill — bottom-right corner of the cover frame */}
+        {video && project.duration ? (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute right-3 bottom-3 rounded-sm border border-gold/40 bg-ink/75 px-2 py-1 text-[0.68rem] leading-none tracking-[0.16em] text-gold-bright backdrop-blur-sm sm:right-4 sm:bottom-4"
+          >
+            {project.duration}
+          </span>
+        ) : null}
       </div>
 
       <div className="mt-5 flex items-baseline justify-between gap-4">

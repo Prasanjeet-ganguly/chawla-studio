@@ -36,9 +36,10 @@ const resolver: Resolver<Enquiry> = (values) => {
   return { values: {}, errors: errors as FieldErrors<Enquiry> };
 };
 
-/** Inputs are underlines, not boxes — the page has enough borders already. */
+/** Inputs are underlines, not boxes — the page has enough borders already.
+ * Minimum text-base (16px) ensures iOS Safari will not zoom on focus. */
 const CONTROL =
-  'w-full border-0 border-b border-hairline bg-transparent px-0 py-3 text-paper transition-colors duration-500 ease-[var(--ease-out-expo)] placeholder:text-muted/70 hover:border-hairline-strong focus:border-selenium disabled:cursor-not-allowed disabled:opacity-40';
+  'w-full border-0 border-b border-hairline bg-transparent px-0 py-3 text-base text-paper transition-colors duration-500 ease-[var(--ease-out-expo)] placeholder:text-muted/70 hover:border-hairline-strong focus:border-selenium disabled:cursor-not-allowed disabled:opacity-40';
 
 type ControlProps = {
   id: string;

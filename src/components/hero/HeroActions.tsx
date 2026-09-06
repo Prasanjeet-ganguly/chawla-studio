@@ -28,7 +28,7 @@ export function HeroActions({ shown, onShowreel }: HeroActionsProps) {
   return (
     <div
       className={cx(
-        'mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 md:mt-12',
+        'mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 sm:mt-9 md:mt-12 md:gap-x-8',
         RISE,
         risen(shown)
       )}
