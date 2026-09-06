@@ -1,0 +1,25 @@
+# Cloudflare Pages / Static Hosting Headers
+
+# Immutable static Next.js assets with content hash
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Photography & responsive image variants
+/photos/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=2592000
+  Access-Control-Allow-Origin: *
+
+# Loading screen and UI images
+/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=2592000
+  Access-Control-Allow-Origin: *
+
+# Fonts
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Default security headers
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin

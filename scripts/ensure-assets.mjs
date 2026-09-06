@@ -1,37 +1,54 @@
 /**
- * Guard that runs before `dev` and `build`.
+ * Guard that runs before `dev`, `build`, and `export`.
  *
- * Both image pipelines write generated TypeScript that is gitignored, because it
- * is derived data — so a fresh clone has no src/lib/*.generated.ts and would
- * fail with a module-not-found error before Next even starts. Rather than that,
- * generate whatever is missing on demand.
+ * Both image pipelines write generated TypeScript and optimized responsive
+ * variants into /public (which is gitignored). On a fresh clone or CI build
+ * (such as Cloudflare Pages, Vercel, or Docker), neither the manifests nor the
+ * variant directories exist yet.
  *
- * Nothing here rebuilds an existing manifest: adding or replacing source images
- * is an explicit `npm run photos` / `npm run loading-image`.
+ * This guard ensures both the TypeScript manifests and the responsive image
+ * variants are physically generated before Next.js builds or serves the app.
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
+/**
+ * Returns true if directory exists and has at least one entry.
+ */
+const hasContent = (dir) => {
+  if (!existsSync(dir)) return false;
+  try {
+    return readdirSync(dir).length > 0;
+  } catch {
+    return false;
+  }
+};
+
 const ASSETS = [
   {
     label: 'photos',
     manifest: path.join(ROOT, 'src', 'lib', 'photos.generated.ts'),
+    outputDir: path.join(ROOT, 'public', 'photos'),
     script: path.join(ROOT, 'scripts', 'optimize-photos.mjs'),
-    reason: 'photo manifest missing — running the photography pipeline first',
+    reason: 'photos or manifest missing/empty — running photography optimization pipeline',
   },
   {
     label: 'loading',
     manifest: path.join(ROOT, 'src', 'lib', 'loader-image.generated.ts'),
+    outputDir: path.join(ROOT, 'public', 'images', 'loading'),
     script: path.join(ROOT, 'scripts', 'optimize-loading-image.mjs'),
-    reason: 'loading-screen manifest missing — building the loader background first',
+    reason: 'loading background or manifest missing/empty — building loader image variants',
   },
 ];
 
 for (const asset of ASSETS) {
-  if (existsSync(asset.manifest)) continue;
+  const isManifestPresent = existsSync(asset.manifest);
+  const isOutputPresent = hasContent(asset.outputDir);
+
+  if (isManifestPresent && isOutputPresent) continue;
 
   console.log(`[${asset.label}] ${asset.reason}`);
   const result = spawnSync(process.execPath, [asset.script], { stdio: 'inherit', cwd: ROOT });

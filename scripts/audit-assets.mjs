@@ -1,11 +1,11 @@
-const fs = require('node:fs');
-const path = require('node:path');
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import path from 'node:path';
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'out');
 
-if (!fs.existsSync(OUT)) {
-  console.error('[audit] out/ does not exist — run `npm run export` first.');
+if (!existsSync(OUT)) {
+  console.error('[audit] out/ does not exist — run `npm run export` or `npm run build` first.');
   process.exit(1);
 }
 
@@ -13,8 +13,8 @@ if (!fs.existsSync(OUT)) {
 const photosGeneratedPath = path.join(ROOT, 'src', 'lib', 'photos.generated.ts');
 const loaderGeneratedPath = path.join(ROOT, 'src', 'lib', 'loader-image.generated.ts');
 
-const photosContent = fs.readFileSync(photosGeneratedPath, 'utf-8');
-const loaderContent = fs.readFileSync(loaderGeneratedPath, 'utf-8');
+const photosContent = readFileSync(photosGeneratedPath, 'utf-8');
+const loaderContent = readFileSync(loaderGeneratedPath, 'utf-8');
 
 // Extract photo IDs and their src/srcSet values using regex
 const srcRegex = /^\s*\bsrc:\s*"([^"]+)"/m;
@@ -29,11 +29,9 @@ const entryRegex = /^\s+"([0-9a-f]+)":\s*\{/gm;
 
 while ((match = entryRegex.exec(photosContent)) !== null) {
   const id = match[1];
-  // The match[0] contains '"0f5a...": {' - we need to find where the { actually starts
   const matchStr = match[0];
   const braceIndex = match.index + matchStr.indexOf('{');
 
-  // Find the closing brace for this entry - count braces
   let braceCount = 0;
   let entryEnd = braceIndex;
   for (let i = braceIndex; i < photosContent.length; i++) {
@@ -102,7 +100,7 @@ const toDiskPath = (url) => {
 
 const checkEntry = (label, entry) => {
   const urls = [...collectUrls(entry)];
-  const missing = urls.filter((u) => !fs.existsSync(toDiskPath(u)));
+  const missing = urls.filter((u) => !existsSync(toDiskPath(u)));
   const sample = urls[0] ?? '(none)';
   const status = missing.length === 0 ? 'OK' : 'MISSING';
   console.log(`  [${status}] ${label}: ${urls.length - missing.length}/${urls.length} files present (e.g. ${sample})`);
@@ -128,15 +126,15 @@ if (LOADER_BACKGROUND) {
 }
 
 const ogPath = path.join(OUT, 'opengraph-image');
-if (fs.existsSync(ogPath) && fs.statSync(ogPath).size > 0) {
-  console.log(`  [OK] opengraph card: out/opengraph-image (${(fs.statSync(ogPath).size / 1024).toFixed(1)} KB)`);
+if (existsSync(ogPath) && statSync(ogPath).size > 0) {
+  console.log(`  [OK] opengraph card: out/opengraph-image (${(statSync(ogPath).size / 1024).toFixed(1)} KB)`);
 } else {
   console.log(`  [MISSING] opengraph card: out/opengraph-image`);
   totalMissing += 1;
 }
 
 const photosDir = path.join(OUT, 'photos');
-const filesInDir = fs.existsSync(photosDir) ? new Set(fs.readdirSync(photosDir)) : new Set();
+const filesInDir = existsSync(photosDir) ? new Set(readdirSync(photosDir)) : new Set();
 const referencedFiles = new Set();
 for (const id of PHOTO_IDS) {
   for (const u of collectUrls(PHOTOS[id])) {
@@ -148,8 +146,8 @@ const orphans = [...filesInDir].filter((f) => !referencedFiles.has(f));
 console.log(`  [info] out/photos/ has ${filesInDir.size} files, ${orphans.length} orphan${orphans.length === 1 ? '' : 's'}`);
 
 const loadingDir = path.join(OUT, 'images', 'loading');
-if (fs.existsSync(loadingDir)) {
-  const loadingFiles = new Set(fs.readdirSync(loadingDir));
+if (existsSync(loadingDir)) {
+  const loadingFiles = new Set(readdirSync(loadingDir));
   let loadingReferenced = 0;
   if (LOADER_BACKGROUND) {
     for (const u of collectUrls(LOADER_BACKGROUND)) {
