@@ -1,0 +1,15 @@
+{
+  "key": "2296175:1788078567868:640-1024-1440-1920-2560:v1",
+  "entry": {
+    "id": "chatgpt-image-aug-30-2026-01-59-24-pm",
+    "width": 1536,
+    "height": 1024,
+    "aspectRatio": 1.5,
+    "src": "/images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-1280.jpg",
+    "srcSet": "/images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-640.webp 640w, /images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-1024.webp 1024w, /images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-1440.webp 1440w, /images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-1536.webp 1536w",
+    "avifSrcSet": "/images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-640.avif 640w, /images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-1024.avif 1024w, /images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-1440.avif 1440w, /images/loading/chatgpt-image-aug-30-2026-01-59-24-pm-1536.avif 1536w",
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwBACdASoUAA0APwlwsFArpiSisAgBcCEJagCdMoR4PxaDm4E2dBSLV4AA/un1CI+uNI5x/fJlWMCzPgFQU0v78MmMafZfgfxy3cTdZK3wwkV6gEKnpcY0AAA=",
+    "baseColor": "#562210",
+    "source": "Loading Screen/ChatGPT Image Aug 30, 2026, 01_59_24 PM.png"
+  }
+}
